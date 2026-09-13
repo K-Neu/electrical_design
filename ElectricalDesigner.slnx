@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ElectricalDesigner.App/ElectricalDesigner.App.csproj" />
+    <Project Path="src/ElectricalDesigner.Application/ElectricalDesigner.Application.csproj" />
+    <Project Path="src/ElectricalDesigner.Domain/ElectricalDesigner.Domain.csproj" />
+    <Project Path="src/ElectricalDesigner.Infrastructure/ElectricalDesigner.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ElectricalDesigner.Domain.Tests/ElectricalDesigner.Domain.Tests.csproj" />
+    <Project Path="tests/ElectricalDesigner.Infrastructure.Tests/ElectricalDesigner.Infrastructure.Tests.csproj" />
+    <Project Path="tests/ElectricalDesigner.TestKit/ElectricalDesigner.TestKit.csproj" />
+  </Folder>
+</Solution>

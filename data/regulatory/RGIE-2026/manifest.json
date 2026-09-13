@@ -1,0 +1,25 @@
+{
+  "id": "RGIE-BE",
+  "version": "2026-04-01",
+  "source": "SPF Économie",
+  "jurisdiction": "BE",
+  "scope": "LV/LVLS",
+  "sourceReferences": [
+    {
+      "book": "Livre 1",
+      "title": "Installations à basse tension et à très basse tension",
+      "editionVersion": "06",
+      "legalBasis": "Arrêté royal du 6 octobre 2025",
+      "effectiveDate": "2026-04-01",
+      "url": "https://economie.fgov.be/sites/default/files/Files/Publications/files/RGIE-Annexe-Livre-1-Installations-a-basse-tenstion-et-a-tres-basse-tension-2026.pdf"
+    }
+  ],
+  "status": "draft",
+  "notes": [
+    "Squelette Phase 0 : ce fichier ne contient volontairement AUCUNE règle exécutable.",
+    "Le texte réglementaire complet ne doit pas être copié ici sans vérification des droits de reproduction (cahier §40).",
+    "Les règles exécutables (RuleDefinition) seront ajoutées en Phase 7 (moteur de validation) et Phase 11 (conformité réglementaire complète).",
+    "Chaque règle devra référencer : livre, partie, chapitre, section, sous-section, source officielle, date d'application, statut."
+  ],
+  "rules": []
+}

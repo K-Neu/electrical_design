@@ -1,0 +1,14 @@
+## dotnet build artifacts
+[Bb]in/
+[Oo]bj/
+*.user
+.vs/
+
+# Fichiers projet utilisateur (.elecproj) générés lors des tests manuels locaux
+*.elecproj
+/scratch/
+/sandbox-projects/
+
+# OS
+.DS_Store
+Thumbs.db

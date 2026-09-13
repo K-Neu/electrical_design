@@ -1,0 +1,23 @@
+<Project>
+
+  <!--
+    Paramètres partagés par tous les projets de la solution.
+    Objectif Phase 0 : un socle strict (nullable, warnings visibles) pour éviter
+    d'accumuler de la dette technique avant même la Phase 1.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn)</NoWarn>
+    <WarningsAsErrors>false</WarningsAsErrors>
+    <!-- Passera à true dès la fin de Phase 0 une fois l'équipe habituée aux nullable warnings -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+
+</Project>

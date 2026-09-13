@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Vérifier le formatage (dotnet format)
+        run: dotnet format --verify-no-changes
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Tests — Domain (mini-framework Phase 0)
+        run: dotnet run --project tests/ElectricalDesigner.Domain.Tests --no-build --configuration Release
+
+      - name: Tests — Infrastructure (mini-framework Phase 0)
+        run: dotnet run --project tests/ElectricalDesigner.Infrastructure.Tests --no-build --configuration Release
+
+      # NOTE (voir docs/01_Architecture.md §5 et docs/11_Testing.md) :
+      # Le projet de tests utilise en Phase 0 un mini-framework maison car
+      # l'environnement d'amorçage local n'avait pas accès à nuget.org.
+      # GitHub Actions, lui, a un accès NuGet standard. Dès la migration vers
+      # xUnit (Microsoft.NET.Test.Sdk + xunit + xunit.runner.visualstudio),
+      # remplacer l'étape ci-dessus par :
+      #
+      # - name: Tests
+      #   run: dotnet test --no-build --configuration Release --logger trx
