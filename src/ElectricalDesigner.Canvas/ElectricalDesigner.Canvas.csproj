@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    ZÉRO dépendance, y compris vers ElectricalDesigner.Domain — voir
+    docs/04_Canvas.md et docs/01_Architecture.md §6/§7. Ce moteur graphique
+    générique ignore tout du modèle électrique (guide §1.1 : "un moteur 2D
+    générique réutilisable par les deux éditeurs"). Le lien avec le métier
+    (ElectricalSymbolInstance) se fera en Phase 3/4 via CanvasObject.BusinessObjectId,
+    un simple Guid optionnel — jamais une référence de type ou une dépendance
+    de projet vers Domain.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

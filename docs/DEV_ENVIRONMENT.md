@@ -31,16 +31,21 @@ dotnet build
 dotnet run --project src/ElectricalDesigner.App
 dotnet run --project tests/ElectricalDesigner.Domain.Tests
 dotnet run --project tests/ElectricalDesigner.Infrastructure.Tests
+dotnet run --project tests/ElectricalDesigner.Canvas.Tests
 ```
 
 La sortie attendue de `src/ElectricalDesigner.App` : création d'un projet
 minimal (tableau, circuit, protection, câble, charge), validation du modèle,
-sauvegarde dans un fichier `.elecproj`, puis rechargement avec vérification
-d'intégrité — voir `docs/03_File_Format.md`.
+sauvegarde dans un fichier `.elecproj`, rechargement avec vérification
+d'intégrité, puis (Phase 2) une démonstration du moteur canvas (100 objets
+placés, sélectionnés, déplacés, zoom, undo, sauvegarde/rechargement de scène)
+— voir `docs/03_File_Format.md` et `docs/04_Canvas.md`.
 
 C'est exactement le critère de sortie de la Phase 1 (guide §Phase 1) :
 "créer et sauvegarder un projet avec un tableau, un circuit, une protection
-et une charge sans interface graphique."
+et une charge sans interface graphique", puis celui de la Phase 2 : "placer
+100 objets sur une scène, les déplacer, les sélectionner, zoomer, annuler et
+sauvegarder leurs coordonnées sans perte."
 
 ## Éditeurs recommandés
 
@@ -62,7 +67,7 @@ dotnet format
 
 L'environnement utilisé pour créer ce dépôt initial n'avait pas accès à
 `nuget.org` (liste blanche réseau restreinte à `archive.ubuntu.com`,
-`github.com`, etc.). Le socle Phase 0 a donc été construit sans aucun
+`github.com`, etc.). Le socle Phase 0/1/2 a donc été construit sans aucun
 package NuGet. Un poste de développement normal, ou la CI GitHub Actions,
 n'a pas cette limitation. Voir `docs/01_Architecture.md` §5 pour le détail et
 la marche à suivre pour ajouter Avalonia/xUnit/SQLite dès que possible.

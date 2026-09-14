@@ -32,12 +32,15 @@ mécanique dès qu'un accès NuGet est disponible. Il est désormais dans son
 propre projet (`ElectricalDesigner.TestKit`) et partagé par tous les projets
 de tests, plutôt que dupliqué dans chacun.
 
-## État actuel (Phase 1)
+## État actuel (Phase 2)
 
 | Projet de tests | Portée | Nombre de tests |
 |---|---|---|
 | `ElectricalDesigner.Domain.Tests` | Invariants des entités, validation structurelle, scénario complet du critère de sortie Phase 1 | 16 |
 | `ElectricalDesigner.Infrastructure.Tests` | Persistance : sauvegarde/rechargement, intégrité, fichier corrompu/absent (guide §21.2) | 4 |
+| `ElectricalDesigner.Canvas.Tests` | Géométrie/transform, scène, sélection, commandes/undo-redo, presse-papiers, persistance de scène, scénario complet du critère de sortie Phase 2 | 57 |
+
+**Total : 77 tests, tous verts.**
 
 ## Ce qui est testé depuis la Phase 1
 
@@ -50,6 +53,42 @@ de tests, plutôt que dupliqué dans chacun.
   d'intégrité (exactement le scénario recommandé au guide §21.2), plus les
   cas d'erreur (fichier corrompu, fichier absent, version de format non
   supportée).
+
+## Ce qui est testé depuis la Phase 2
+
+- `WorldTransform` : aller-retour monde↔écran exact, zoom centré sur le
+  curseur (le point monde sous le curseur reste sous ce même point écran),
+  bornes min/max de zoom, panoramique tenant compte du zoom courant.
+- `Rect2D` : `Contains`/`Intersects`/`FromPoints` (normalisation quel que
+  soit l'ordre des points).
+- `CanvasObject` : validation à la création, déplacement, **test de
+  propriété** (cahier §34.2) "une rotation de 360° restitue la géométrie
+  initiale", normalisation d'angle, boîte englobante tenant compte de
+  l'échelle, clonage pour le copier/coller (nouvel identifiant, décalage,
+  perte du verrouillage et du lien métier par défaut).
+- `CanvasScene` : ajout/suppression, doublon d'identifiant refusé,
+  hit-test ponctuel (objets invisibles jamais touchés), sélection
+  rectangulaire, et le scénario "placer 100 objets" du critère de sortie.
+- `SelectionManager` : sélection simple vs. multiple, bascule (toggle),
+  vidage.
+- `CommandHistory` : exécution/undo/redo, la pile de redo est vidée après une
+  nouvelle exécution, une séquence create→move→undo→undo restitue l'état
+  vide (**test de propriété**), undo sans historique lève une exception.
+- Commandes individuelles : déplacement groupé (ignore les objets
+  verrouillés), rotation/redimensionnement/changement de propriété
+  génériques avec undo exact, suppression avec ré-insertion à l'identique,
+  commande composite annulée dans l'ordre inverse.
+- `CanvasClipboard` : copier/coller avec nouveaux identifiants, copie de
+  groupes de symboles (cahier §12.1), le lien métier n'est pas hérité par
+  défaut au collage.
+- `SceneSerializer` : aller-retour JSON préservant toutes les propriétés,
+  sauvegarde/rechargement fichier de 100 objets sans perte de coordonnées,
+  fichier inexistant détecté.
+- **Scénario complet du critère de sortie Phase 2**, en un seul test
+  d'intégration (`Phase2ExitCriteriaTests`) : placer 100 objets, en
+  sélectionner et déplacer une partie en un geste groupé, zoomer centré sur
+  le curseur, copier/coller, annuler deux fois, puis sauvegarder/recharger
+  sans perte de coordonnées.
 
 ## Jeux de données de référence (guide §22)
 

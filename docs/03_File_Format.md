@@ -75,13 +75,25 @@ vérifier intégrité") :
 - chargement d'un fichier corrompu (un octet altéré) : `InvalidDataException` ;
 - chargement d'un fichier inexistant : `FileNotFoundException`.
 
-## Hors périmètre Phase 1 (rappel)
+## Persistance du canvas (Phase 2)
+
+Le moteur canvas (`ElectricalDesigner.Canvas`, voir `docs/04_Canvas.md`) a
+son propre mécanisme de sérialisation (`SceneSerializer`, JSON), volontairement
+**indépendant** du format `.elecproj` : en Phase 2, une scène canvas est un
+outil générique (100 objets génériques, sans signification électrique) qui
+n'est pas encore rattaché à un `SchematicPage`/`PositionPlan`. Ce rattachement
+(et donc l'intégration de `pages/*.json` dans `.elecproj`) est prévu en
+Phase 3/4, quand l'éditeur de schéma/plan attribuera une scène par page.
+
+## Hors périmètre Phase 1/2 (rappel)
 
 - Chiffrement du stockage local (cahier §32) — Phase 10.
 - Signature/hash des documents **publiés** (distinct du hash d'intégrité
   interne déjà en place) — Phase 10/11.
 - Snapshots d'historique complet (`history/snapshots/`), au-delà de l'undo/
-  redo en mémoire du futur canvas (Phase 2) et de l'historique de revisions
-  déjà en place (`Project.Revisions`, append-only).
+  redo en mémoire du canvas (Phase 2, en mémoire uniquement) et de
+  l'historique de révisions déjà en place (`Project.Revisions`, append-only).
 - Migration `v1 → v2` : le point d'extension existe (`FormatVersion` vérifié
   explicitement) mais aucune migration n'est encore nécessaire.
+- Intégration `pages/*.json` (scènes canvas rattachées aux pages du projet) —
+  Phase 3/4.

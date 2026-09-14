@@ -2,6 +2,61 @@
 
 Toutes les évolutions notables du dépôt sont consignées ici.
 
+## [Phase 2] — Moteur graphique commun (canvas)
+
+### Ajouté
+- Nouveau projet `ElectricalDesigner.Canvas`, **zéro dépendance** (y compris
+  vers `Domain`) : voir `docs/04_Canvas.md` et `docs/01_Architecture.md` §7.
+- Géométrie (étapes G01-G04, guide §6) : `Point2D`, `Size2D`, `Rect2D`,
+  `WorldTransform` (immuable ; transformation monde↔écran, zoom centré sur
+  le curseur, panoramique).
+- Scène (étapes G05, G11) : `CanvasObjectId` (identifiant fort), `CanvasObject`
+  (position, taille, rotation, échelle, visibilité, verrouillage, calque,
+  lien métier optionnel `BusinessObjectId`), `CanvasScene` (collection
+  d'objets, hit-test ponctuel, requête rectangulaire), `GridSettings`
+  (grille + accrochage).
+- Sélection (étapes G06, G10) : `SelectionManager` (sélection simple,
+  multiple, bascule).
+- Commandes et historique (étapes G07-G09, G13, pattern Command exact du
+  guide §10) : `ICanvasCommand`, `CommandHistory` (undo/redo),
+  `AddObjectCommand`, `RemoveObjectCommand`, `MoveObjectsCommand` (déplacement
+  groupé pour la multi-sélection), `RotateObjectCommand`,
+  `ResizeObjectCommand`, `ChangePropertyCommand<T>` (générique),
+  `CompositeCommand` (regroupe plusieurs commandes en une seule entrée
+  d'historique).
+- Presse-papiers (étape G12) : `CanvasClipboard` (copie de groupes de
+  symboles, collage avec nouveaux identifiants et décalage, le lien métier
+  n'est pas hérité par défaut).
+- Persistance de scène : `SceneSerializer` (JSON, sauvegarde atomique),
+  volontairement indépendante du format `.elecproj` (voir
+  `docs/03_File_Format.md`, section "Persistance du canvas").
+- `ElectricalDesigner.Canvas.Tests` : 57 tests (géométrie, scène, sélection,
+  commandes/undo-redo, presse-papiers, persistance), incluant le scénario
+  complet du critère de sortie Phase 2 en un seul test d'intégration.
+- `src/ElectricalDesigner.App` étendu : démonstration du moteur canvas après
+  la démonstration Phase 1 (100 objets placés, sélection/déplacement groupé,
+  zoom centré sur le curseur, copier/coller, undo x2, sauvegarde/rechargement
+  de scène sans perte de coordonnées).
+- Documentation : nouveau `docs/04_Canvas.md` (ordre exact de construction
+  G01-G16 et statut de chaque étape, décisions de conception, limites
+  assumées) ; `docs/01_Architecture.md`, `docs/02_Domain_Model.md`,
+  `docs/03_File_Format.md`, `docs/DEV_ENVIRONMENT.md`, `docs/11_Testing.md`
+  mis à jour.
+
+### Critère de sortie Phase 2 — validé
+- "Placer 100 objets sur une scène, les déplacer, les sélectionner, zoomer,
+  annuler et sauvegarder leurs coordonnées sans perte" : ✅
+  (`Phase2ExitCriteriaTests`, démonstration `App/Program.cs`).
+- Ordre exact du guide §6 : G01 à G13 implémentés et testés ; G14 (rendu
+  vectoriel), G15 (hit-testing précis sur formes pivotées) et G16
+  (clipping/performance) sont explicitement différés à la Phase 3/4 — voir
+  `docs/04_Canvas.md` pour la justification détaillée de cette limite.
+
+### Prochaine étape
+Phase 3 — éditeur de schéma unifilaire (bibliothèque de symboles, palette,
+placement, propriétés, liaisons, pagination, cartouche), consommant
+`ElectricalDesigner.Canvas` pour l'édition graphique.
+
 ## [Phase 1] — Fondation du modèle de données
 
 ### Ajouté

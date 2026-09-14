@@ -4,10 +4,12 @@
     <Project Path="src/ElectricalDesigner.Application/ElectricalDesigner.Application.csproj" />
     <Project Path="src/ElectricalDesigner.Domain/ElectricalDesigner.Domain.csproj" />
     <Project Path="src/ElectricalDesigner.Infrastructure/ElectricalDesigner.Infrastructure.csproj" />
+    <Project Path="src/ElectricalDesigner.Canvas/ElectricalDesigner.Canvas.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/ElectricalDesigner.Domain.Tests/ElectricalDesigner.Domain.Tests.csproj" />
     <Project Path="tests/ElectricalDesigner.Infrastructure.Tests/ElectricalDesigner.Infrastructure.Tests.csproj" />
+    <Project Path="tests/ElectricalDesigner.Canvas.Tests/ElectricalDesigner.Canvas.Tests.csproj" />
     <Project Path="tests/ElectricalDesigner.TestKit/ElectricalDesigner.TestKit.csproj" />
   </Folder>
 </Solution>

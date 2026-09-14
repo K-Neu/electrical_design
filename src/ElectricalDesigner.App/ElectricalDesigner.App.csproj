@@ -4,6 +4,7 @@
     <ProjectReference Include="..\ElectricalDesigner.Domain\ElectricalDesigner.Domain.csproj" />
     <ProjectReference Include="..\ElectricalDesigner.Application\ElectricalDesigner.Application.csproj" />
     <ProjectReference Include="..\ElectricalDesigner.Infrastructure\ElectricalDesigner.Infrastructure.csproj" />
+    <ProjectReference Include="..\ElectricalDesigner.Canvas\ElectricalDesigner.Canvas.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -37,8 +37,11 @@ l'état. `Project.Validate()` vérifie en plus toutes les références croisées
 typé : `EntityId<Circuit>` et `EntityId<DistributionBoard>` sont des types
 distincts pour le compilateur, ce qui empêche par construction de confondre
 un identifiant de circuit avec un identifiant de tableau. La position
-graphique n'est jamais utilisée comme identité — d'ailleurs, en Phase 1, il
-n'existe encore aucune propriété graphique dans le Domain (voir plus bas).
+graphique n'est jamais utilisée comme identité — d'ailleurs, il n'existe
+aucune propriété graphique dans le Domain (voir plus bas). Le moteur canvas
+de la Phase 2 (`ElectricalDesigner.Canvas`) réutilise le même schéma
+d'identifiant fort (`CanvasObjectId`), mais dans un projet totalement
+séparé : voir `docs/04_Canvas.md`.
 
 ## Horodatage et déterminisme
 
@@ -66,15 +69,17 @@ graphique.
 
 ## Les trois vérités ne sont pas mélangées (guide §1.3)
 
-Concrètement, en Phase 1 :
+Concrètement :
 - Aucune classe du Domain n'a de propriété `x`, `y`, `rotation`, `layer`,
-  `color`... Ces propriétés graphiques (guide §5.4) arriveront avec le moteur
-  canvas (Phase 2) et l'éditeur de schéma/plan (Phase 3/4), probablement
-  portées par les pages (`SchematicPage`/`PositionPlan`) plutôt que par
-  `ElectricalSymbolInstance` lui-même — ce choix sera affiné en Phase 2/3.
+  `color`... Ces propriétés graphiques (guide §5.4) vivent désormais dans
+  `ElectricalDesigner.Canvas` (Phase 2, voir `docs/04_Canvas.md`) — un projet
+  distinct, sans dépendance vers `Domain`, précisément pour que le graphique
+  ne puisse jamais muter une caractéristique électrique par accident.
 - `SchematicPage` et `PositionPlan` existent déjà comme structures (identité,
   titre, ordre, liste des symboles qu'elles contiennent) mais n'ont aucun
-  contenu géométrique réel.
+  contenu géométrique réel : le lien entre une page et une scène canvas sera
+  établi en Phase 3/4 lorsque l'éditeur de schéma/plan consommera
+  `ElectricalDesigner.Canvas`.
 - `Circuit.CalculationData` (type `CircuitCalculationSnapshot`) est un type
   intentionnellement vide : il réserve la place pour les résultats du moteur
   de calcul (Phase 8) sans anticiper leur forme exacte.
